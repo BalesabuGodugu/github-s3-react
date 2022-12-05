@@ -1,0 +1,17 @@
+version: 1.0.0
+phases: 
+  install:
+    runtime-versions: 
+      nodejs: 16
+    commands: 
+      - echo "installing dependencies"
+      - npm install 
+  build:
+    commands:
+      - echo "building react project"
+      - npm run build --prod
+  post-build:
+  commands:
+      - echo "updating files to s3 bucket"
+      - npm run build --prod
+      - aws s3 sync build/ s3://demo-app-22 --delete 
